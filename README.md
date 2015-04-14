@@ -12,3 +12,9 @@ $ git clone https://github.com/kwzrhouse/api.kwzrhouse.net
 $ pip install -r requirements.txt
 $ python app.py
 ```
+
+## やっておくといいこと
+
+```
+$ git update-index --skip-worktree config.py
+```
