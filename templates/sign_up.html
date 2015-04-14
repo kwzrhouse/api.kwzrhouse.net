@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang='ja'>
-    <head>
-        <meta charset='utf-8'>
-        <title>kwzrhouse API</title>
-    </head>
-    <body>
-        <h1>Registration</h1>
-        <h2>Your ID</h2>
-        <form action='/sign_up' method='POST'>
-            <input type='text' name='name' placeholder='ID'></input>
-            <button type='submit'>Register</button>
-        </form>
-    </body>
-</html>
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Registration</h1>
+    <h2>Your ID</h2>
+    <form action='/sign_up' method='POST'>
+        <input type='text' name='name' placeholder='ID'></input>
+        <button type='submit'>Register</button>
+    </form>
+{% endblock %}

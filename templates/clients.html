@@ -1,29 +1,23 @@
-<!DOCTYPE html>
-<html lang='ja'>
-    <head>
-        <meta charset='utf-8'>
-        <title>kwzrhouse API</title>
-    </head>
-    <body>
-        <h1>Clients</h1>
-        <h2>Add Client: /add_client</h2>
-        {% for client in clients %}
-            <h2>Application: {{ client.name }}</h2>
-            <h3>Redirect URI:</h3>
-            {% for uri in client.raw_redirect_uris.split(' ') %}
-                <h4>{{ uri }}</h4>
-            {% endfor %}
-            <h3>Client ID: {{ client.client_id }}</h3>
-            <h3>Client Secret: {{ client.client_secret }}</h3>
-            <form action='/reset_api_key' method='POST'>
-                <input type='hidden' name='id' value='{{ client.client_id }}' />
-                <button type='submit'>Reset API Key</button>
-            </form>
-            <form action='/remove_client' method='POST'>
-                <input type='hidden' name='id' value='{{ client.client_id }}' />
-                <button type='submit'>Remove Client</button>
-            </form>
-        {% endfor %}
-    </body>
-</html>
+{% extends 'layout.html' %}
 
+{% block body %}
+    <h1>Clients</h1>
+    <h2>Add Client: /add_client</h2>
+    {% for client in clients %}
+        <h2>Application: {{ client.name }}</h2>
+        <h3>Redirect URI:</h3>
+        {% for uri in client.raw_redirect_uris.split(' ') %}
+            <h4>{{ uri }}</h4>
+        {% endfor %}
+        <h3>Client ID: {{ client.client_id }}</h3>
+        <h3>Client Secret: {{ client.client_secret }}</h3>
+        <form action='/reset_api_key' method='POST'>
+            <input type='hidden' name='id' value='{{ client.client_id }}' />
+            <button type='submit'>Reset API Key</button>
+        </form>
+        <form action='/remove_client' method='POST'>
+            <input type='hidden' name='id' value='{{ client.client_id }}' />
+            <button type='submit'>Remove Client</button>
+        </form>
+    {% endfor %}
+{% endblock %}

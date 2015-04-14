@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html lang='ja'>
-    <head>
-        <meta charset='utf-8'>
-        <title>kwzrhouse API</title>
-    </head>
-    <body>
-        <h1>kwzrhouse API</h1>
-        {% if user %}
-            <h2>Hello, {{ user.name }}</h2>
-        {% else %}
-            <h2>Login with Twitter: /login/twitter</h2>
-        {% endif %}
-    </body>
-</html>
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>kwzrhouse API</h1>
+    {% if user %}
+        <h2>Hello, {{ user.name }}</h2>
+    {% else %}
+        <h2>Login with Twitter: /login/twitter</h2>
+    {% endif %}
+{% endblock %}
