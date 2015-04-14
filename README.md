@@ -10,6 +10,9 @@
 ```
 $ git clone https://github.com/kwzrhouse/api.kwzrhouse.net
 $ pip install -r requirements.txt
+
+# [Twitter Apps](https://apps.twitter.com/)を登録して, Consumer KeyとConsumer Secretをconfig.pyに書く
+
 $ python app.py
 ```
 
