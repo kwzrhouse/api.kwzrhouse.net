@@ -48,7 +48,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if g.user is None:
-            return redirect(url_for(''))
+            return redirect(url_for('index'))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -166,7 +166,7 @@ def oauthorized():
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
     if not 'twitter_oauth' in session:
-        redirect(url_for('/'))
+        redirect(url_for('index'))
 
     if request.method == 'POST':
         res = session['twitter_oauth']
