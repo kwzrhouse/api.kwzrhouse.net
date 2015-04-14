@@ -75,15 +75,15 @@ def load_grant(client_id, code):
 @provider.grantsetter
 def save_grant(client_id, code, request, *args, **kwargs):
     user_id = Client.query.filter_by(client_id=client_id).first().user_id
-    user = User.query.get(user_id)
     expires = datetime.utcnow() + timedelta(seconds=60)
+
     grant = Grant(
-        user=user,
+        user_id=user_id,
         client_id=client_id,
-        redirect_uri=request.redirect_uri,
-        raw_scopes=' '.join(request.scopes),
-        expires=expires,
         code=code['code'],
+        redirect_uri=request.redirect_uri,
+        expires=expires,
+        raw_scopes=' '.join(request.scopes),
     )
 
     db.session.add(grant)
@@ -101,7 +101,7 @@ def load_token(access_token=None, refresh_token=None):
 def save_token(token, request, *args, **kwargs):
     tokens = Token.query.filter_by(
         client_id=request.client.client_id,
-        user_id=request.user.id
+        user_id=request.user.id,
     )
 
     for t in tokens:
@@ -215,7 +215,7 @@ def add_client():
             client_secret = gen_salt(50),
             user_id = current_user()['id'],
             raw_redirect_uris = request.form['redirect_uri'],
-            raw_default_scopes='email',
+            raw_default_scopes='general',
         )
 
         db.session.add(client)
