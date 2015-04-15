@@ -7,7 +7,6 @@ from flask import (
     Flask, 
     session, request, render_template, 
     redirect, jsonify, g, url_for
-
 )
 from flask_sqlalchemy import SQLAlchemy
 from flask_oauthlib.client import OAuth
@@ -170,6 +169,7 @@ def sign_up():
 
     if request.method == 'POST':
         res = session['twitter_oauth']
+
         user = User.query.filter_by(twitter_id=res['user_id']).first()
         if user is not None:
             return redirect(url_for('index'))
