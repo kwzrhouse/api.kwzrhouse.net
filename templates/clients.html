@@ -9,6 +9,10 @@
         {% for uri in client.raw_redirect_uris.split(' ') %}
             <h4>{{ uri }}</h4>
         {% endfor %}
+        <h3>Scopes:</h3>
+        {% for scope in client.raw_default_scopes.split(' ') %}
+            <h4>{{ scope }}</h4>
+        {% endfor %}
         <h3>Client ID: {{ client.client_id }}</h3>
         <h3>Client Secret: {{ client.client_secret }}</h3>
         <form action='/reset_api_key' method='POST'>

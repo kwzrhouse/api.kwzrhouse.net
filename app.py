@@ -182,6 +182,7 @@ def sign_up():
         user = User(
             name = name,
             twitter_id = res['user_id'],
+            authority = 'Outsider',
         )
 
         db.session.add(user)
@@ -209,13 +210,21 @@ def clients():
 @login_required
 def add_client():
     if request.method == 'POST':
+        user = current_user()
+        scopes = 'general'
+
+        if user['authority'] == 'Admin':
+            scopes = 'general inhabitant admin'
+        elif user['authority'] == 'Inhabitant':
+            scopes = 'general inhabitant'
+
         client = Client(
             name = request.form['name'],
             client_id = gen_salt(40),
             client_secret = gen_salt(50),
             user_id = current_user()['id'],
             raw_redirect_uris = request.form['redirect_uri'],
-            raw_default_scopes='general',
+            raw_default_scopes=scopes,
         )
 
         db.session.add(client)
@@ -251,6 +260,26 @@ def reset_api_key():
     db.session.commit()
 
     return redirect(url_for('clients'))
+
+@app.route('/authority', methods=['GET', 'POST'])
+@login_required
+def authority():
+    user = current_user()
+    user = User.query.filter_by(id=user['id']).first().as_dict()
+    if user is None or user['authority'] != 'Admin':
+        return redirect(url_for('index'))
+
+    if (request.method == 'POST'):
+        user = User.query.filter_by(id=request.form['id']).first()
+        user.authority = request.form['type']
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('authority'))
+    else:
+        users = User.query.all()
+        return render_template('authority.html', users=users)
 
 @app.route('/api/me')
 @provider.require_oauth()

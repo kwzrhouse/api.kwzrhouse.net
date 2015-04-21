@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Authority</h1>
+    {% for user in users %}
+        <h2>{{ user.name }}: {{ user.authority }}</h2>
+        <form action='/authority' method='POST'>
+            <input type='hidden' name='id' value='{{ user.id }}' />
+            <input type='hidden' name='type' value='Outsider' />
+            <button type='submit'>Outsider</button>
+        </form>
+        <form action='/authority' method='POST'>
+            <input type='hidden' name='id' value='{{ user.id }}' />
+            <input type='hidden' name='type' value='Inhabitant' />
+            <button type='submit'>Inhabitant</button>
+        </form>
+        <form action='/authority' method='POST'>
+            <input type='hidden' name='id' value='{{ user.id }}' />
+            <input type='hidden' name='type' value='Admin' />
+            <button type='submit'>Admin</button>
+        </form>
+    {% endfor %}
+{% endblock %}

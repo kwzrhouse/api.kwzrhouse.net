@@ -10,6 +10,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), unique=True)
     twitter_id = db.Column(db.String(255), unique=True)
+    authority = db.Column(db.String(255))
 
     def as_dict(self):
        return { c.name: getattr(self, c.name) for c in self.__table__.columns }
