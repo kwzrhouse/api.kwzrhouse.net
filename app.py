@@ -40,7 +40,9 @@ from models import *
 
 def current_user():
     if 'user' in session:
-        return session['user']
+        id = session['user']['id']
+        user = User.query.filter_by(id=id).first().as_dict()
+        return user
     return None
 
 def login_required(f):
@@ -265,7 +267,6 @@ def reset_api_key():
 @login_required
 def authority():
     user = current_user()
-    user = User.query.filter_by(id=user['id']).first().as_dict()
     if user is None or user['authority'] != 'Admin':
         return redirect(url_for('index'))
 
