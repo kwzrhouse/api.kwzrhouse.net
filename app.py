@@ -282,10 +282,16 @@ def authority():
         users = User.query.all()
         return render_template('authority.html', users=users)
 
+def scopes(oauth):
+    return oauth.client.default_scopes
+
 @app.route('/api/me')
 @provider.require_oauth()
 def me():
-    return jsonify(request.oauth.user.as_dict())
+    if 'general' in scopes(request.oauth):
+        return jsonify(request.oauth.user.as_dict())
+
+    return jsonify(message='error')
 
 if __name__ == '__main__':
     db.create_all()
